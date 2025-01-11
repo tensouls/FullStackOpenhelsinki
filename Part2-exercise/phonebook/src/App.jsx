@@ -12,7 +12,6 @@ const App = () => {
     contactService.getAll().then((iniContacts) => {
       setPersons(iniContacts);
     });
-    console.log(persons);
   }, []);
 
   const handleDelete = (id) => {
@@ -45,11 +44,9 @@ const App = () => {
       name: newName,
       number: newNumber,
     };
-    console.log(person, "this is their number", person.number);
 
     if (persons.some((p) => p.name === person.name)) {
       let existingPerson = persons.find((p) => p.name === person.name);
-      console.log(existingPerson);
       if (
         window.confirm(
           `${existingPerson.name} already in phonebook, replace old number with new number?`
@@ -85,13 +82,24 @@ const App = () => {
       }
       setNewName("");
     } else {
-      contactService.create(person).then((newPerson) => {
-        setPersons([...persons, newPerson]);
-        setNotification(`${newPerson.name} successfully added`);
-        setTimeout(() => {
-          setNotification(null);
-        }, 5000);
-      });
+      contactService
+        .create(person)
+        .then((newPerson) => {
+          setPersons([...persons, newPerson]);
+          setNotification(`${newPerson.name} successfully added`);
+          setTimeout(() => {
+            setNotification(null);
+          }, 5000);
+        })
+        .catch((error) => {
+          console.log(`${error.response.data.error}`);
+          setNotification(
+            `failed to create as '${person.name}' ${error.response.data.error}`
+          );
+          setTimeout(() => {
+            setNotification(null);
+          }, 5000);
+        });
     }
 
     setNewName("");
@@ -171,7 +179,6 @@ const PersonForm = ({
 };
 
 const Persons = ({ filtered, handleDelete }) => {
-  console.log("filtered:", filtered);
   return (
     <ul style={{ listStyleType: "none" }}>
       {filtered.map((person) => (
