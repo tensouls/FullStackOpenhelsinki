@@ -1,0 +1,28 @@
+{
+  "name": "p3_phonebook_exercises",
+  "version": "1.0.0",
+  "description": "Part 3 exercises for fullstack course",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "dev": "nodemon index.js",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build:ui": "rm -rf dist && cd ../Part2-exercise/phonebook/ && npm run build && cp -r dist ../../Part3",
+    "deploy": "fly deploy",
+    "deploy:full": "npm run build:ui && npm run deploy",
+    "logs:prod": "fly logs"
+  },
+  "author": "Saeed Tal",
+  "license": "MIT",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.7",
+    "express": "^4.21.2",
+    "mongoose": "^8.9.3",
+    "morgan": "^1.10.0"
+  },
+  "devDependencies": {
+    "@flydotio/dockerfile": "^0.5.9",
+    "nodemon": "^3.1.9"
+  }
+}
