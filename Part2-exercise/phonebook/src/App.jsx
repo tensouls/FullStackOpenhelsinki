@@ -53,12 +53,7 @@ const App = () => {
         )
       ) {
         let changedNumber = { ...existingPerson, number: person.number };
-        console.log(
-          "here's the changed number",
-          changedNumber,
-          "and here's their id:",
-          changedNumber.id
-        );
+
         contactService
           .update(existingPerson.id, changedNumber)
           .then((updated) => {
